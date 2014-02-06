@@ -28,6 +28,21 @@ class JobFeedSpider(CrawlSpider):
             job = JobFeedItem()
             job['title'] = card.xpath("div/a[@class='title']/text()").extract()
             job['link'] = card.xpath("div/a").re("""\s*(?i)href\s*=\s*(\"([^"]*\")|'[^']*'|([^'">\s]+))""")
+            job['description'] = card.xpath("div[@class='desc']/text()").extract()
+            job['price'] = card.xpath("div[@class='stats']/span[@class='bold']/text()").extract() # e.g 'Hourly Rate: 15$/hr'
+
+            stats = card.xpath("div[@class='stats']/text()").re('[^|\xa0]+')
+            posted = ''
+            ends = ''
+            for line in stats:
+                if 'Posted' in line:
+                    posted = line
+                if 'Ends' in line:
+                    ends = line
+
+            job['posted'] = posted
+            job['ends'] = ends
+
             jobs.append(job)
         return jobs
 
