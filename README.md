@@ -7,7 +7,7 @@ more rules) and publishes the results on a static html page.
 
 Site:
 =====
-visit neotheicebird.github.io/jobless to get the list of job links. Right now
+visit http://neotheicebird.github.io/jobless/ to get the list of job links. Right now
 the webpage is kinda messy, I would clean it up soon.
 
 Implemented:
