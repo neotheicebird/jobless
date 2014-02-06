@@ -27,7 +27,9 @@ class JobFeedSpider(CrawlSpider):
         for card in jobCards:
             job = JobFeedItem()
             job['title'] = card.xpath("div/a[@class='title']/text()").extract()
-            job['link'] = card.xpath("div/a").re("""\s*(?i)href\s*=\s*(\"([^"]*\")|'[^']*'|([^'">\s]+))""")
+            job['link'] = card.xpath("div/a[@class='title']").re("""\s*(?i)href\s*=\s*(\"([^"]*\")|'[^']*'|([^'">\s]+))""")[0]
+            # TODO the re returns 3 strings, first 2 are the same link and 3rd
+            # ''. Dunno why, but there should be a better re.
             job['description'] = card.xpath("div[@class='desc']/text()").extract()
             job['price'] = card.xpath("div[@class='stats']/span[@class='bold']/text()").extract() # e.g 'Hourly Rate: 15$/hr'
 
